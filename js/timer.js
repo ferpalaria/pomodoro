@@ -1,4 +1,4 @@
-import Sounds from "./sounds"
+import Sounds from "./sounds.js"
 
 // Factory
 export default function Timer({
