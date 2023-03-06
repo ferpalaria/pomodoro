@@ -1,25 +1,13 @@
 import "./tittleTab.js"
 import Controls from "./controls.js"
 import Timer from "./timer.js"
-import Sound from "./sounds.js"
 import Events from "./events.js"
 import {
-    buttonPause,
-    buttonPlay,
-    buttonSet,
-    buttonStop,
     minutesDisplay,
     secondsDisplay
 } from "./elements.js"
 
-const sounds = Sound()
-
-const controls = Controls({
-    buttonPause,
-    buttonPlay,
-    buttonSet,
-    buttonStop,
-})
+const controls = Controls()
 
 const timer = Timer({
     minutesDisplay,
@@ -27,4 +15,4 @@ const timer = Timer({
     resetControls: controls.reset,
 })
 
-Events({timer, sounds, controls})
+Events({timer, controls})

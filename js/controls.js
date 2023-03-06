@@ -1,15 +1,23 @@
-export default function Controls({
-    buttonPlay,
+import {
     buttonPause,
+    buttonPlay,
     buttonSet,
-    buttonStop
-}) {
+    buttonStop,
+    buttonSoundOff,
+    buttonSoundOn,
+    buttonFire,
+    buttonMarket,
+    buttonTree,
+    buttonRain
+} from './elements.js'
+
+export default function Controls() {
 
     function reset() {
         buttonPlay.classList.remove('hide')
         buttonPause.classList.add('hide')
-        buttonSet.classList.remove('hide')
-        buttonStop.classList.add('hide')
+        // buttonSet.classList.remove('hide')
+        // buttonStop.classList.add('hide')
     }
 
     function play() {
@@ -24,6 +32,20 @@ export default function Controls({
         buttonPlay.classList.remove('hide')
     }
 
+    function soundOn() {
+        buttonSoundOn.classList.remove('hide')
+        buttonSoundOff.classList.add('hide')
+    }
+
+    function soundOff() {
+        buttonSoundOn.classList.add('hide')
+        buttonSoundOff.classList.remove('hide')
+    }
+
+    function isSoundMuted() {
+        return buttonSoundOn.getAttribute('class') == 'hide'
+    }
+
     function getMinutes() {
         let newMinutes = prompt('Quantos minutos?')
         if (!newMinutes) {
@@ -32,10 +54,27 @@ export default function Controls({
         return newMinutes
     }
 
+    function activate(button) {
+        resetButtonActived()
+        button.classList.toggle('clicked')
+    }
+
+    function resetButtonActived() {
+        buttonFire.classList.remove('clicked')
+        buttonMarket.classList.remove('clicked')
+        buttonTree.classList.remove('clicked')
+        buttonRain.classList.remove('clicked')
+    }
+
     return {
         reset,
         play,
         pause,
-        getMinutes
+        getMinutes,
+        activate,
+        soundOff,
+        soundOn,
+        isSoundMuted,
+        resetButtonActived
     }
 }

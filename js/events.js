@@ -1,3 +1,4 @@
+import Sound from "./sounds.js"
 import {
     buttonPause,
     buttonPlay,
@@ -5,42 +6,51 @@ import {
     buttonSoundOff,
     buttonSoundOn,
     buttonStop,
+    buttonFire,
+    buttonRain,
+    buttonTree,
+    buttonMarket
 } from "./elements.js"
 
 export default function Events({
     controls,
     timer,
-    sounds
 }) {
+
+    let currentPlaying 
+
+    const sounds = Sound()
 
     buttonPlay.addEventListener('click', function () {
         controls.play()
+        controls.soundOn()
         timer.countdown()
         sounds.pressButton()
+        currentPlaying == undefined ?
+            playOrPause(sounds.playEasyListening) :
+            currentPlaying()
     })
 
     buttonPause.addEventListener('click', function () {
         controls.pause()
+        controls.soundOff()
         timer.hold()
         sounds.pressButton()
+        sounds.muteAll()
     })
 
     buttonStop.addEventListener('click', function () {
         controls.reset()
+        controls.soundOff()
+        controls.resetButtonActived()
         timer.reset()
         sounds.pressButton()
-    })
-
-    buttonSoundOff.addEventListener('click', function () {
-        buttonSoundOn.classList.remove('hide')
-        buttonSoundOff.classList.add('hide')
-        sounds.bgAudio.pause()
+        sounds.muteAll()
     })
 
     buttonSoundOn.addEventListener('click', function () {
-        buttonSoundOn.classList.add('hide')
-        buttonSoundOff.classList.remove('hide')
-        sounds.bgAudio.play()
+        controls.soundOff()
+        sounds.muteAll()
     })
 
     buttonSet.addEventListener('click', function () {
@@ -54,4 +64,38 @@ export default function Events({
         timer.updateDisplay(newMinutes, 0)
         timer.updateMinutes(newMinutes)
     })
+
+    function playOrPause(playSound) {
+        if (currentPlaying == playSound && !controls.isSoundMuted()) {
+            sounds.muteAll()
+            controls.soundOff()
+            currentPlaying = undefined
+        } else {
+            sounds.muteAll()
+            playSound()
+            controls.soundOn()
+            currentPlaying = playSound
+        }
+    }
+
+    buttonTree.addEventListener('click', function () {
+        controls.activate(buttonTree)
+        playOrPause(sounds.playFloresta)
+    })
+
+    buttonRain.addEventListener('click', function () {
+        controls.activate(buttonRain)
+        playOrPause(sounds.playChuva)
+    })
+
+    buttonMarket.addEventListener('click', function () {
+        controls.activate(buttonMarket)
+        playOrPause(sounds.playCafeteria)
+    })
+
+    buttonFire.addEventListener('click', function () {
+        controls.activate(buttonFire)
+        playOrPause(sounds.playLareira)
+    })
+
 }
