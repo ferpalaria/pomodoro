@@ -9,7 +9,9 @@ import {
     buttonFire,
     buttonRain,
     buttonTree,
-    buttonMarket
+    buttonMarket,
+    buttonMinus,
+    buttonPlus
 } from "./elements.js"
 
 export default function Events({
@@ -17,7 +19,7 @@ export default function Events({
     timer,
 }) {
 
-    let currentPlaying 
+    let currentPlaying
 
     const sounds = Sound()
 
@@ -48,6 +50,14 @@ export default function Events({
         sounds.muteAll()
     })
 
+    buttonMinus.addEventListener('click', function () {
+        timer.decreaseFiveMinutes()
+    })
+
+    buttonPlus.addEventListener('click', function () {
+        timer.increaseFiveMinutes()
+    })
+
     buttonSoundOn.addEventListener('click', function () {
         controls.soundOff()
         sounds.muteAll()
@@ -58,7 +68,6 @@ export default function Events({
         currentPlaying == undefined ?
             playOrPause(sounds.playEasyListening) :
             currentPlaying()
-
     })
 
     buttonSet.addEventListener('click', function () {
@@ -105,5 +114,4 @@ export default function Events({
         controls.activate(buttonFire)
         playOrPause(sounds.playLareira)
     })
-
 }
