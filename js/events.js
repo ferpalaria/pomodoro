@@ -53,6 +53,14 @@ export default function Events({
         sounds.muteAll()
     })
 
+    buttonSoundOff.addEventListener('click', function () {
+        controls.soundOn()
+        currentPlaying == undefined ?
+            playOrPause(sounds.playEasyListening) :
+            currentPlaying()
+
+    })
+
     buttonSet.addEventListener('click', function () {
         let newMinutes = controls.getMinutes()
 
